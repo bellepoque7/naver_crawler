@@ -7,3 +7,6 @@
     - CONTENT: 리뷰
     - TAG: 리뷰시 태그된 평가(유통기한,포장,맛), 구매자 등 가끔 등장하는 태그도 존재
     - WRITE_DT: 작성날짜
+ 
+- 웹드라이버 주소
+    - https://googlechromelabs.github.io/chrome-for-testing/
