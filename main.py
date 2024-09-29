@@ -1,11 +1,7 @@
 '''적용방법
-1. Chormewebdriver를 크롬브라우저버전에 맞게 다운로드
-2. Chromewebdriver 입력
-3. 크롤링할 스마트스토어 페이지 입력
+크롤링할 스마트스토어 페이지 입력
 
 '''
-
-chrome_driver_path = r'chromedriver-win64/chromedriver.exe'
 url = 'https://smartstore.naver.com/latin/products/5550127158'
 '''
 밀알왕순대: https://smartstore.naver.com/latin/products/10078570992
@@ -34,10 +30,18 @@ options.add_argument("disable-gpu")
 options.add_argument("disable-infobars")
 options.add_argument("--disable-extensions")
 options.add_argument('--no-sandbox') 
-# print(chrome_driver_path)
-service = Service(executable_path=chrome_driver_path)
 
-driver = webdriver.Chrome(service = service, options=options)
+# 방법 1. 수동으로 로컬들라이브 잡아주기
+# chrome_driver_path = r'chromedriver-win64/chromedriver.exe'
+# print(chrome_driver_path)
+# service = Service(executable_path=chrome_driver_path)
+
+# 방법2: WebDriverManager를 사용하여 ChromeDriver 자동 설치 및 설정
+service = Service(ChromeDriverManager().install())
+
+# 웹드라이버 초기화
+driver = webdriver.Chrome(service=service, options=options)
+
 # wait seconds...
 driver.implicitly_wait(3)
 driver.get(url)
@@ -147,5 +151,4 @@ timenow = datetime.now().strftime("%Y%m%d_%H%M")
 end = time.time()
 long = (end - start) // 60 
 print(f'총 {long} 분 소요 되었습니다.')
-# result_df.to_csv('./result_{timenow}.csv', encoding='utf-8-sig')
-result_df.to_csv(f'./naver_shop_crawler/naver_crawler/result_{timenow}.csv', encoding='utf-8-sig')
+result_df.to_csv(f'./result_{timenow}.csv', encoding='utf-8-sig')
