@@ -2,7 +2,7 @@
 크롤링할 스마트스토어 페이지 입력
 
 '''
-url = 'https://smartstore.naver.com/latin/products/5550127158'
+url = 'https://smartstore.naver.com/latin/products/10078570992'
 '''
 밀알왕순대: https://smartstore.naver.com/latin/products/10078570992
 미미제면소만두:https://smartstore.naver.com/latin/products/4794297226
@@ -23,6 +23,11 @@ from selenium.webdriver.common.by import By
 from datetime import datetime, timedelta
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
+
+'''
+1. 크롬 옵션설정과 객체 생성
+'''
+
 options = webdriver.ChromeOptions() # 크롬 옵션 객체 생성
 # options.add_argument('headless') # headless 모드 설정 -> 해당 옵션 적용 시 PDF 다운 불가
 options.add_argument("window-size=1920x1080") # 화면크기(전체화면)
@@ -31,7 +36,7 @@ options.add_argument("disable-infobars")
 options.add_argument("--disable-extensions")
 options.add_argument('--no-sandbox') 
 
-# 방법 1. 수동으로 로컬들라이브 잡아주기
+# 방법 1. 수동으로 로컬드라이브 잡아주기
 # chrome_driver_path = r'chromedriver-win64/chromedriver.exe'
 # print(chrome_driver_path)
 # service = Service(executable_path=chrome_driver_path)
@@ -43,6 +48,10 @@ service = Service(ChromeDriverManager().install())
 driver = webdriver.Chrome(service=service, options=options)
 
 # wait seconds...
+
+'''
+2. 리뷰버튼 + 최신순 정렬 구현
+'''
 driver.implicitly_wait(3)
 driver.get(url)
 time.sleep(3)
@@ -60,6 +69,10 @@ driver.find_element(By.CSS_SELECTOR,'#REVIEW > div > div._2LvIMaBiIO > div._2LAw
 time.sleep(3)
 
 
+
+'''
+3. 데이터를 저장하기 위한 지료 초기화
+'''
 write_lst = []
 rate_lst = []
 item_lst =[]
@@ -140,6 +153,11 @@ while True :
         break
     page_num += 1
 print('done')    
+
+'''
+4. 데이터프레임 저장
+'''
+
 result_df = pd.DataFrame({
               'ITEM_NM' : item_lst,
               'RATE' : rate_lst,
