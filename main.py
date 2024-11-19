@@ -52,7 +52,7 @@ driver = webdriver.Chrome(service=service, options=options)
 '''
 2. 리뷰버튼 + 최신순 정렬 구현
 '''
-driver.implicitly_wait(3)
+driver.implicitly_wait(3) # 3초안에 웹페이지 로딩되면 넘어가기
 driver.get(url)
 time.sleep(3)
 #selenium으로 접속시 자동차단되는 현상 -> 새로고침 버튼 눌러서 해결
