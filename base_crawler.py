@@ -11,6 +11,9 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 import time 
 
+# 옵션 설정
+# 하기 옵션을 넣지않으면 봇으로 감지해서 reCAPCHA와 같은 단계가 생기기 때문에, 옵션에서 사람인것 처럼 설정
+
 '''
 1. 크롬 옵션설정과 객체 생성
 '''
@@ -22,19 +25,18 @@ options.add_argument("disable-gpu")
 options.add_argument("disable-infobars")
 options.add_argument("--disable-extensions")
 options.add_argument('--no-sandbox') 
+# 하기 옵션을 넣지않으면 봇으로 감지해서 reCAPCHA와 같은 단계가 생기기 때문에, 옵션에서 사람인것 처럼 설정
+options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36")
+options.add_argument("--disable-blink-features=AutomationControlled")
 
-# 방법 1. 수동으로 로컬드라이브 잡아주기
-# chrome_driver_path = r'chromedriver-win64/chromedriver.exe'
-# print(chrome_driver_path)
-# service = Service(executable_path=chrome_driver_path)
 
-# 방법2: WebDriverManager를 사용하여 ChromeDriver 자동 설치 및 설정
 service = Service(ChromeDriverManager().install())
 
 # 웹드라이버 초기화
-driver = webdriver.Chrome(service=service, options=options)
+driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
-
+# Google 검색 페이지 열기
+driver.get("https://www.google.com")
 
 try:
     # 구글 홈페이지 열기
@@ -52,7 +54,7 @@ try:
     time.sleep(2)
 
     # 첫 번째 검색 결과 가져오기
-    first_result = driver.find_element(By.XPATH, "/html/body/div[3]/div/div[12]/div/div[2]/div[2]/div/div/div[1]/div/div/div/div[1]/div/div/span/a/h3")
+    first_result = driver.find_element(By.XPATH, "/html/body/div[3]/div/div[12]/div/div/div[2]/div[2]/div/div/div[1]/div/div/div/div[1]/div/div/span/a/h3")
     print("첫 번째 검색 결과 제목:", first_result.text)
 
     # 첫 번째 검색 결과 클릭

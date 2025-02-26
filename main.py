@@ -1,4 +1,6 @@
-'''적용방법
+'''
+현재 작동 막힘
+적용방법
 크롤링할 스마트스토어 페이지 입력
 
 '''
@@ -23,7 +25,8 @@ from selenium.webdriver.common.by import By
 from datetime import datetime, timedelta
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
-
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 '''
 1. 크롬 옵션설정과 객체 생성
 '''
@@ -56,16 +59,22 @@ driver.implicitly_wait(3) # 3초안에 웹페이지 로딩되면 넘어가기
 driver.get(url)
 time.sleep(3)
 #selenium으로 접속시 자동차단되는 현상 -> 새로고침 버튼 눌러서 해결
-try:
-    driver.find_element(By.CSS_SELECTOR, '#content > div > div > div > a.button.highlight').click()
-except:
-    pass
+# try:
+#     driver.find_element(By.CSS_SELECTOR, '#content > div > div > div > a.button.highlight').click()
+# except:
+#     pass
 time.sleep(3)
 #리뷰버튼 클릭
-driver.find_element(By.CSS_SELECTOR,'#content > div > div.z7cS6-TO7X > div._27jmWaPaKy > ul > li:nth-child(2) > a').click()
+# driver.find_element(By.CSS_SELECTOR,'#content > div > div.z7cS6-TO7X > div._27jmWaPaKy > ul > li:nth-child(2) > a').click()
+# driver.find_element(By.CSS_SELECTOR,'#_productFloatingTab > div > div._27jmWaPaKy._1dDHKD1iiX > ul > li:nth-child(2) > a').click()
 time.sleep(3)
 #최신순버튼 클릭
-driver.find_element(By.CSS_SELECTOR,'#REVIEW > div > div._2LvIMaBiIO > div._2LAwVxx1Sd > div._1txuie7UTH > ul > li:nth-child(2) > a').click()
+# driver.find_element(By.CSS_SELECTOR,'#REVIEW > div > div._2LvIMaBiIO > div._2LAwVxx1Sd > div._1txuie7UTH > ul > li:nth-child(2) > a').click()
+element = WebDriverWait(driver, 10).until(
+    EC.presence_of_element_located((By.XPATH, "/html/body/div/div/div[3]/div[2]/div[2]/div/div[3]/div[8]/div/div[3]/div[1]/div[1]/ul/li[2]/a"))
+)
+element.click()
+
 time.sleep(3)
 
 
