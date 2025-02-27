@@ -9,8 +9,6 @@ from webdriver_manager.chrome import ChromeDriverManager
 import time 
 import pandas as pd
 
-# 옵션 설정
-# 하기 옵션을 넣지않으면 봇으로 감지해서 reCAPCHA와 같은 단계가 생기기 때문에, 옵션에서 사람인것 처럼 설정
 
 '''
 1. 크롬 옵션설정과 객체 생성
@@ -32,7 +30,6 @@ options.add_argument("--disable-blink-features=AutomationControlled")
 
 
 # 웹드라이버 초기화
-
 def get_click():
     service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service, options=options)
